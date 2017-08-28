@@ -7,6 +7,11 @@ var Entity = function(position, velocity, centerOffset,collisionRadius) {
   this.collisionRadius = collisionRadius;
 }
 
+Entity.prototype.updateCenter = function(yOffset) {
+  this.collisionCenter.x = this.position.x + Block.width/2;
+  this.collisionCenter.y = this.position.y + Block.height/2 + yOffset;
+}
+
 // Enemies our player must avoid
 var Enemy = function(randomXStart) {
     var xOffset = 0;
@@ -34,6 +39,12 @@ var Enemy = function(randomXStart) {
     // this.position = new Vec2(Block.width, startLane * Block.partialHeight + Block.edgeHeight );
 
 };
+
+
+// Inherit base class function
+Enemy.prototype = Object.create(Entity.prototype);
+
+Enemy.prototype.constructor = Enemy;
 
 // Go, Go!
 Enemy.prototype.recalculateSpeed = function() {
@@ -137,8 +148,7 @@ Enemy.prototype.update = function(dt) {
     this.position.add(this.velocity.scale(dt));
 
     // Update center
-    this.collisionCenter.x = this.position.x + Block.width/2;
-    this.collisionCenter.y = this.position.y + Block.height/2 + 24;
+    this.updateCenter(24);
 };
 
 // Draw the enemy on the screen, required method for game
@@ -160,20 +170,33 @@ Enemy.prototype.render = function() {
 // This class requires an update(), render() and
 // a handleInput() method.
 var Player = function() {
+  // this = Object.create(Player);
     this.sprite = 'images/char-boy.png';
-    this.velocity = new Vec2();
-    this.position = new Vec2(Screen.width/2 - Block.width/2,
-                              Screen.height - Block.edgeHeight );
-
     this.gridLocation = new Vec2();
-    this.calculateGridLocation();
-
     this.preDir = new Vec2(-99,-99);
 
-    this.collisionCenter = new Vec2();
-    this.updateCenter();
-    this.collisionRadius = new Vec2(16, 12);
+    Entity.call(
+      this,
+      // Position w/randomg startLane
+      new Vec2(Screen.width/2 - Block.width/2,
+                                Screen.height - Block.edgeHeight ),
+      // Player input velocity
+      new Vec2(),
+      // Collision offset from center get's calcuated
+      new Vec2(0,24),
+      // Collision Radius
+      new Vec2(16, 12)
+    );
+
+    this.calculateGridLocation();
+
 };
+
+// Inherit base class function
+Player.prototype = Object.create(Entity.prototype);
+
+Player.prototype.constructor = Player;
+
 
 Player.edgeHeight = 32;
 Player.edgeWidth = 10;
@@ -191,14 +214,8 @@ Player.prototype.update = function(dt) {
   this.velocity.y -= this.velocity.y * friction
 
   // Update center
-  this.updateCenter();
+  this.updateCenter(40);
 };
-
-Player.prototype.updateCenter = function() {
-  this.collisionCenter.x = this.position.x + Block.width/2;
-  this.collisionCenter.y = this.position.y + Block.height/2 + 40;
-}
-
 
 Player.prototype.handleInput = function(v2Dir) {
 
@@ -292,7 +309,9 @@ Player.prototype.checkCollisions = function() {
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
-var player = new Player();;
+var player = new Player();
+player.updateCenter(40);
+
 var allEnemies = [];
 var cDifficulty = 0;
 var cMode = 1;

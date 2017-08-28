@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Effective JavaScript: Frogger</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="startscreen">
+    <div class="screenbody on">
+      <div class="center">
+        <h2>Frog like Game, Plus!</h2>
+        <!-- BUG: You can click this many times before its removed to reset multiple times -->
+        <input type="button" onclick="appStart()" value="Start">
+      </div>
+    </div>
+  </div>
+  <div id="endscreen">
+    <div class="screenbody off">
+      <div class="center">
+        <h2>You %data%</h2>
+        <!-- BUG: You can click this many times before its removed to reset multiple times -->
+        <input type="button" onclick="appStart()" value="Again?">
+      </div>
+    </div>
+  </div>
+  <div class="atop">
+    <h1>Change Settings at any time!</h1>
+    <div id="difficulty" class="difficulty">
+      <label><input name="diff" value="0" checked type="radio">Easy</label>
+      <label><input name="diff" value="1" type="radio">Normal</label>
+      <label><input name="diff" value="2" type="radio">Hard</label>
+      <label><input name="diff" value="3" type="radio">???</label>
+    </div>
+    <br>
+    <div id="mode" class="mode">
+      <label><input name="mode" value="0" checked type="radio">Mode1::Normal</label>
+      <label><input name="mode" value="1" type="radio">Mode2::Space</label>
+    </div>
+  </div>
+  <script src="js/resources.js"></script>
+  <script src="js/quickMath.js"></script>
+  <script src="js/engine.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

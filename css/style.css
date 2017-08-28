@@ -1,0 +1,40 @@
+body {
+    text-align: center;
+}
+
+#startscreen,
+#endscreen {
+  position: absolute;
+  left: 50%;
+  top: 25%;
+}
+
+.screenbody {
+  position: absolute;
+  left: calc(50% - 150px);;
+  top: 25%;
+  width: 300px;
+  height: 200px;
+  background-color: gainsboro;
+  border: 3px solid slategray;
+  display: flex;
+  transition: opacity .66s ease-in-out;
+ -moz-transition: opacity .66s ease-in-out;
+ -webkit-transition: opacity .66s ease-in-out;
+}
+
+.off {
+  opacity: 0;
+}
+
+.on {
+  opacity: 1;
+}
+
+.center {
+  margin: auto;
+}
+
+.screenbody h2{
+  margin-top: 0;
+}
